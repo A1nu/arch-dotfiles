@@ -11,7 +11,6 @@ alias y='yazi'
 
 # Faster search tools
 alias grep='rg'
-alias find='fd'
 
 # Navigation
 alias ..='cd ..'
