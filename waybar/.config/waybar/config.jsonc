@@ -1,0 +1,60 @@
+{
+  "layer": "top",
+  "position": "top",
+  "margin": "6 6 0 6",
+  "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+  "modules-right": ["custom/gpu-usage", "cpu", "memory", "temperature", "pulseaudio", "network", "battery", "tray", "clock", "hyprland/language"],
+
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "sort-by-number": true
+  },
+
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "{:%Y-%m-%d  %H:%M:%S}"
+  },
+
+  "cpu": { "format": " {usage}%", "tooltip": true },
+  "memory": { "format": " {used:0.1f}G", "tooltip": true },
+
+  "temperature": {
+    "critical-threshold": 85,
+    "format": " {temperatureC}°C"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": " mute",
+    "on-click": "easyeffects",
+    "scroll-step": 2,
+    "icons": { "default": ["","",""] }
+  },
+
+  "network": {
+    "format-wifi": "󰖩 {essid} {signalStrength}%",
+    "format-ethernet": "󰈀 {ifname}",
+    "format-disconnected": "󰖪",
+    "tooltip": true
+  },
+
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-icons": ["󰁺","󰁼","󰁾","󰂀","󰁹"]
+  },
+
+  "custom/gpu-usage": {
+    "format": "{}% {icon}",
+    "format-icons": "󰾲",
+    "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
+    "interval": 5
+  },
+  "hyprland/language": {
+    "format": "{short}",       // Покажет US / RU
+    "tooltip": false
+  }
+
+  // If you only want bar on center monitor, uncomment:
+  // "output": ["DP-2"]
+}

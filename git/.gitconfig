@@ -1,0 +1,15 @@
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[core]
+	editor = nvim
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+[user]
+	name = A1nu
+	email = ainu.develop@gmail.com
