@@ -100,7 +100,14 @@ return {
 			end
 		end
 
+		-- local capabilities = cmp_nvim_lsp.default_capabilities()
+
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+		capabilities.textDocument = capabilities.textDocument or {}
+		capabilities.textDocument.foldingRange = {
+			dynamicRegistration = false,
+			lineFoldingOnly = true,
+		}
 
 		local servers = {
 			-- JS / TS
