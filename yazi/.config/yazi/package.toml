@@ -1,0 +1,12 @@
+[[plugin.deps]]
+use = "boydaihungst/mediainfo"
+rev = "0e2ae47"
+hash = "6656f2869ae2274a0e1860876f15186f"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:smart-enter"
+rev = "e95c7b3"
+hash = "56fdabc96fc1f4d53c96eb884b02a5be"
+
+[flavor]
+deps = []
