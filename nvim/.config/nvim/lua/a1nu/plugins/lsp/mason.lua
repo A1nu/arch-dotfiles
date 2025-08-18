@@ -43,12 +43,8 @@ return {
 				-- General languages
 				"lua_ls", -- Lua
 				"bashls", -- Bash/sh
-				"gopls", -- Go
-				"jdtls", -- Java
 				"clangd", -- C/C++ (covers your Treesitter `c`)
 				"vimls", -- Vimscript (for `vim` filetype)
-				"basedpyright", -- or "pyright" (pick one)
-				"ruff",
 			},
 		})
 
@@ -58,10 +54,6 @@ return {
 				"stylua", -- lua formatter
 				"isort", -- python formatter
 				"black", -- python formatter
-				"goimports",
-				"gofumpt",
-				"golines",
-				"google-java-format",
 				"shfmt",
 				"clang-format",
 				"eslint_d",
@@ -70,11 +62,8 @@ return {
 				"yamllint",
 				"markdownlint",
 				"shellcheck",
-				"golangci-lint",
 				"checkstyle",
-				"hadolint",
 				"editorconfig-checker",
-				"pylint",
 			},
 		})
 	end,
