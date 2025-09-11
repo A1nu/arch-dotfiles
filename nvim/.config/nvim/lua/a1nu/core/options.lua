@@ -4,6 +4,7 @@ local opt = vim.opt -- for conciseness
 
 -- persistend undo
 vim.opt.undofile = true
+vim.fn.mkdir(vim.fn.expand("~/.nvim/undodir"), "p")
 vim.opt.undodir = os.getenv("HOME") .. "/.nvim/undodir"
 
 -- line numbers
