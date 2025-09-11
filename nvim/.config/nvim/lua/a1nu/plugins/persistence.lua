@@ -30,15 +30,5 @@ return {
 		km.set("n", "<leader>wd", function()
 			require("persistence").stop()
 		end, { desc = "Do not save this session" })
-
-		-- Optional: auto-restore last session when launching `nvim` with no file args
-		-- and not inside a git commit, etc.
-		if vim.fn.argc(-1) == 0 then
-			local ignored = { "gitcommit", "gitrebase", "lazy", "mason" }
-			if not vim.tbl_contains(ignored, vim.bo.filetype) then
-				-- Only restore if a session for the CWD exists
-				require("persistence").load({ last = false })
-			end
-		end
 	end,
 }
