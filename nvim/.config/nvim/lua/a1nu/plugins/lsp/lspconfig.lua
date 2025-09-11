@@ -131,13 +131,14 @@ return {
 			bashls = { capabilities = capabilities, filetypes = { "sh", "bash" } },
 			gopls = {
 				capabilities = capabilities,
-				settings = { gopls = { gofumpt = true, staticcheck = true, analyses = { unusedparams = true } } },
-				on_attach = on_attach_disable_fmt,
-			},
-			clangd = {
-				capabilities = capabilities,
-				cmd = { "clangd", "--background-index", "--clang-tidy" },
-				on_attach = on_attach_disable_fmt,
+				settings = {
+					gopls = {
+						gofumpt = true,
+						staticcheck = true,
+						analyses = { unusedparams = true, unreachable = true },
+						completeUnimported = true,
+					},
+				},
 			},
 			vimls = { capabilities = capabilities },
 			dockerls = { capabilities = capabilities },

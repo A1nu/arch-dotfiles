@@ -2,6 +2,7 @@ return {
 	"williamboman/mason.nvim",
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
+		"mfussenegger/nvim-lint",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	config = function()
@@ -57,6 +58,7 @@ return {
 				"shellcheck",
 				"checkstyle",
 				"editorconfig-checker",
+				"gopls",
 			},
 		})
 	end,
