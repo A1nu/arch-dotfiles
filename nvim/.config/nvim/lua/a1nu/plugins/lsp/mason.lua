@@ -5,15 +5,10 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	config = function()
-		-- import mason
 		local mason = require("mason")
-
-		-- import mason-lspconfig
 		local mason_lspconfig = require("mason-lspconfig")
-
 		local mason_tool_installer = require("mason-tool-installer")
 
-		-- enable mason and configure icons
 		mason.setup({
 			ui = {
 				icons = {
@@ -25,40 +20,38 @@ return {
 		})
 
 		mason_lspconfig.setup({
-			-- list of servers for mason to install
 			ensure_installed = {
 				-- JS / TS / TSX
-				"ts_ls", -- TypeScript/JavaScript (supersedes tsserver)  -- jsx, tsx too
-				"eslint", -- LSP for ESLint (diagnostics/code-actions)
-				"tailwindcss", -- Tailwind CSS IntelliSense (optional but common)
+				"ts_ls", -- TypeScript/JavaScript
 				-- Web stack
 				"html", -- HTML
-				"cssls", -- CSS/SCSS/LESS supported by cssls
-				"emmet_language_server", -- Emmet for HTML/CSS/JSX/TSX (optional)
+				"cssls", -- CSS/SCSS/LESS
+				"emmet_language_server", -- Emmet
 				-- Markup / data
-				"jsonls", -- JSON
+				-- "jsonls", -- JSON
 				"yamlls", -- YAML
 				"lemminx", -- XML
-				"marksman", -- Markdown LSP
+				"marksman", -- Markdown
 				-- General languages
 				"lua_ls", -- Lua
 				"bashls", -- Bash/sh
-				"clangd", -- C/C++ (covers your Treesitter `c`)
-				"vimls", -- Vimscript (for `vim` filetype)
+				"clangd", -- C/C++
+				"vimls", -- Vimscript
 			},
 		})
 
 		mason_tool_installer.setup({
 			ensure_installed = {
-				"prettier", -- prettier formatter
+				-- Biome вместо prettier/eslint
+				"biome",
+
+				-- остальные форматтеры/линтеры
 				"stylua", -- lua formatter
 				"isort", -- python formatter
 				"black", -- python formatter
 				"shfmt",
 				"clang-format",
-				"eslint_d",
 				"htmlhint",
-				"jsonlint",
 				"yamllint",
 				"markdownlint",
 				"shellcheck",

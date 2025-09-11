@@ -6,41 +6,39 @@ return {
 
 		conform.setup({
 			formatters_by_ft = {
-				-- JS / TS / Web
-				javascript = { "prettier" },
-				typescript = { "prettier" },
-				javascriptreact = { "prettier" },
-				typescriptreact = { "prettier" },
-				svelte = { "prettier" },
-				html = { "prettier" },
-				css = { "prettier" },
-				scss = { "prettier" }, -- add
-				less = { "prettier" }, -- add
-				graphql = { "prettier" },
-				liquid = { "prettier" },
+				-- JS / TS / Web → Biome
+				javascript = { "biome" },
+				typescript = { "biome" },
+				javascriptreact = { "biome" }, -- .jsx
+				typescriptreact = { "biome" }, -- .tsx
+				svelte = { "biome" },
+				html = { "biome" },
+				css = { "biome" },
+				scss = { "biome" },
+				less = { "biome" },
+				graphql = { "biome" },
+				liquid = { "biome" },
 
 				-- Data/markup
-				json = { "prettier" },
-				yaml = { "prettier" },
-				markdown = { "prettier" },
+				json = { "biome" },
+				jsonc = { "biome" }, -- полезно для tsconfig.json
+				yaml = { "biome" },
+				markdown = { "biome" },
 
-				-- Lua / Python (unchanged)
+				-- Lua / Python (оставляем как было)
 				lua = { "stylua" },
 				python = { "isort", "black" },
 
-				-- Go (extended)
-				-- goimports fixes imports, gofumpt enforces stricter style, golines wraps long lines (optional)
+				-- Go (оставляем как было)
 				go = { "goimports", "gofumpt", "golines" },
 
-				-- Java (new)
-				-- Requires google-java-format (JDK ≥ 17) or falls back to LSP if not found
+				-- Java (оставляем как было)
 				java = { "google-java-format", lsp_format = "fallback" },
 
-				-- Shell (new)
-				-- note: filetype is "sh" even for Bash files in most setups
+				-- Shell
 				sh = { "shfmt" },
 
-				-- C/C++ (new)
+				-- C/C++
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 			},

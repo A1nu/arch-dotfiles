@@ -4,17 +4,28 @@ return {
 	config = function()
 		local lint = require("lint")
 
-		lint.linters_by_ft = {
+		-- 🔧 Define Biome linter
+		lint.linters.biome = {
+			cmd = "biome",
+			args = { "check", "--reporter=unix" },
+			stdin = false,
+			stream = "stdout",
+			ignore_exitcode = true, -- Biome returns non-zero when it finds issues
+			parser = require("lint.parser").from_errorformat("%f:%l:%c: %m", { source = "biome" }),
+		}
 
-			javascript = { "eslint_d" },
-			typescript = { "eslint_d" },
-			javascriptreact = { "eslint_d" }, -- .jsx
-			typescriptreact = { "eslint_d" }, -- .tsx
+		lint.linters_by_ft = {
+			-- JS / TS → Biome
+			javascript = { "biome" },
+			typescript = { "biome" },
+			javascriptreact = { "biome" }, -- .jsx
+			typescriptreact = { "biome" }, -- .tsx
 
 			-- Web / markup
-			html = { "htmlhint" }, -- optional alternative: "tidy"
-			json = { "jsonlint" },
-			yaml = { "yamllint" }, -- needs yamllint installed (see notes)
+			html = { "htmlhint" },
+			json = { "biome" }, -- заменил jsonlint → biome; верни jsonlint, если нужно
+			jsonc = { "biome" }, -- полезно для tsconfig и т.п.
+			yaml = { "yamllint" },
 			markdown = { "markdownlint" },
 
 			-- Shell
@@ -25,13 +36,15 @@ return {
 			go = { "golangci-lint" },
 
 			-- Java
-			java = { "checkstyle" }, -- or { "pmd" } if you prefer
+			java = { "checkstyle" }, -- или { "pmd" }
 
 			-- Docker
 			dockerfile = { "hadolint" },
 
-			-- EditorConfig (runs across files; see note below if you want it global)
+			-- EditorConfig
 			editorconfig = { "editorconfig-checker" },
+
+			-- Python
 			python = { "pylint" },
 		}
 
