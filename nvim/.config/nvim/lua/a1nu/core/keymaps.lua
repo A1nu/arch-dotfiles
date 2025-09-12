@@ -35,3 +35,7 @@ keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer
 keymap.set("n", "<A-j>", "10jzz", { desc = "Scroll down 10 lines and recenter" })
 -- Scroll up 10 lines and recenter
 keymap.set("n", "<A-k>", "10kzz", { desc = "Scroll up 10 lines and recenter" })
+
+-- Search improvements
+keymap.set("n", "n", "nzz", { desc = "Move to next value with screen centered" })
+keymap.set("n", "N", "Nzz", { desc = "Move to previous value with screen centered" })
