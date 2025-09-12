@@ -5,7 +5,7 @@ return {
 	opts = {
 		symbol_in_winbar = {
 			enable = true,
-			separator = "  ",
+			separator = " > ",
 			hide_keyword = true,
 			show_file = true,
 			color_mode = true,

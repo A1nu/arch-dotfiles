@@ -54,6 +54,7 @@ return {
 		lualine.setup({
 			options = {
 				theme = my_lualine_theme,
+				icons_enabled = true,
 			},
 			sections = {
 				lualine_x = {
@@ -65,6 +66,15 @@ return {
 					{ "encoding" },
 					{ "fileformat" },
 					{ "filetype" },
+				},
+				lualine_z = {
+					{ "location" },
+					{
+						icon = "🕐",
+						function()
+							return os.date("%H:%M") -- ⏰ format
+						end,
+					},
 				},
 			},
 		})
