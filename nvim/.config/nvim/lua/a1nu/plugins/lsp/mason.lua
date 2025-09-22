@@ -59,6 +59,7 @@ return {
 				"checkstyle",
 				"editorconfig-checker",
 				"gopls",
+				"golangci-lint",
 			},
 		})
 	end,
