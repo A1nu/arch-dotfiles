@@ -7,11 +7,11 @@ return {
 		{ "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
-		local util = require("lspconfig.util")
+		local util = require("lspconfig.util") -- root helpers
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local keymap = vim.keymap
 
+		-- Keymaps on LSP attach
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
@@ -45,6 +45,7 @@ return {
 			end,
 		})
 
+		-- Diagnostics signs/icons
 		local icons = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
 		if vim.fn.has("nvim-0.10") == 1 or vim.fn.has("nvim-0.11") == 1 then
 			vim.diagnostic.config({
@@ -70,19 +71,21 @@ return {
 			end
 		end
 
+		-- Capabilities
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 		capabilities.textDocument = capabilities.textDocument or {}
 		capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
+		-- Helpers to disable formatting from server side
 		local function disable_formatting(client)
 			client.server_capabilities.documentFormattingProvider = false
 			client.server_capabilities.documentRangeFormattingProvider = false
 		end
-
 		local function on_attach_disable_fmt(client, _)
 			disable_formatting(client)
 		end
 
+		-- Servers configuration (same as you had)
 		local servers = {
 			ts_ls = {
 				capabilities = capabilities,
@@ -101,11 +104,6 @@ return {
 				capabilities = capabilities,
 				filetypes = { "html", "css", "sass", "scss", "less", "javascriptreact", "typescriptreact", "svelte" },
 			},
-			-- jsonls = {
-			-- 	capabilities = capabilities,
-			-- 	settings = { json = { validate = { enable = true } } },
-			-- 	on_attach = on_attach_disable_fmt,
-			-- },
 			yamlls = {
 				capabilities = capabilities,
 				settings = { yaml = { keyOrdering = false } },
@@ -155,9 +153,48 @@ return {
 			},
 		}
 
-		for server, opts in pairs(servers) do
-			if opts ~= false then
-				lspconfig[server].setup(opts)
+		-- Unified setup that supports both new and old API
+		local has_new = vim.fn.has("nvim-0.11") == 1 and vim.lsp and vim.lsp.config
+
+		if has_new then
+			-- New API: register configs and auto-enable per filetype
+			for name, opts in pairs(servers) do
+				if opts ~= false then
+					vim.lsp.config(name, opts) -- register config
+					-- Auto-enable the server on matching filetypes for new buffers
+					local fts = opts.filetypes
+					if fts and #fts > 0 then
+						vim.api.nvim_create_autocmd("FileType", {
+							pattern = fts,
+							callback = function(ev)
+								-- Enable this server for the current buffer
+								-- If your Neovim has vim.lsp.enable(name, { bufnr = ... }), use that:
+								if pcall(vim.lsp.enable, name, { bufnr = ev.buf }) then
+									return
+								end
+								-- Fallback to enabling all matching servers for the buffer
+								vim.lsp.enable({ bufnr = ev.buf })
+							end,
+							desc = ("Enable LSP: %s"):format(name),
+						})
+					else
+						-- If server doesn't declare filetypes, just enable on buffer read/new
+						vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+							callback = function(ev)
+								vim.lsp.enable(name, { bufnr = ev.buf })
+							end,
+							desc = ("Enable LSP (no ft): %s"):format(name),
+						})
+					end
+				end
+			end
+		else
+			-- Old API: lspconfig[server].setup
+			local lspconfig = require("lspconfig")
+			for name, opts in pairs(servers) do
+				if opts ~= false then
+					lspconfig[name].setup(opts)
+				end
 			end
 		end
 	end,

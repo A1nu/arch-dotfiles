@@ -8,5 +8,10 @@ use = "yazi-rs/plugins:smart-enter"
 rev = "e95c7b3"
 hash = "56fdabc96fc1f4d53c96eb884b02a5be"
 
+[[plugin.deps]]
+use = "aresler/path-from-root"
+rev = "c4f03df"
+hash = "5022fdb08fcb05c10eb59b63663edb10"
+
 [flavor]
 deps = []
