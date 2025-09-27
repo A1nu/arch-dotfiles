@@ -1,0 +1,24 @@
+#!/bin/sh
+
+bspc config border_width 2
+bspc config window_gap 10
+bspc config split_ratio 0.50
+bspc config borderless_monocle true
+bspc config gapless_monocle true
+bspc config focus_follows_pointer true
+bspc config pointer_follows_focus true
+
+bspc monitor DP-4 -d 2 5 8 # Left monitor
+bspc monitor DP-2 -d 1 4 7 # Center (primary) monitor
+bspc monitor DP-0 -d 3 6 9 # Right monitor
+
+bspc rule -a mpv state=floating sticky=on rectangle=480x272+2070+57
+bspc rule -a FM state=floating center=on follow=on
+
+bspc config -m DP-4 top_padding 35
+bspc config -m DP-2 top_padding 35
+bspc config -m DP-0 top_padding 35
+
+if ! pgrep -x feh >/dev/null; then
+  feh --bg-fill "$HOME/Pictures/wallpapers/anime-girl-3840x2160-14871.jpeg"
+fi
