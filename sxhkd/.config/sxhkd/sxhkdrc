@@ -40,6 +40,9 @@ super + {h,j,k,l}
 super + shift + {h,j,k,l}
   bspc node -s {west,south,north,east}
 
+super + alt + {h, j, k, l}
+    bspc node -n {west,south,north,east}
+
 # Resize tiles by nudging edges (approx Hypr resizeactive)
 super + ctrl + {h, l}
   bspc node -z left  {+10 0, -10 0}
