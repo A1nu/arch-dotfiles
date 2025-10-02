@@ -85,12 +85,17 @@ return {
 			disable_formatting(client)
 		end
 
-		-- Servers configuration (same as you had)
 		local servers = {
 			ts_ls = {
 				capabilities = capabilities,
-				root_dir = util.root_pattern("tsconfig.json", "jsconfig.json", "package.json", ".git"),
-				single_file_support = false,
+				filetypes = {
+					"javascript",
+					"javascriptreact",
+					"javascript.jsx",
+					"typescript",
+					"typescriptreact",
+					"typescript.tsx",
+				},
 				on_attach = on_attach_disable_fmt,
 			},
 			html = { capabilities = capabilities, on_attach = on_attach_disable_fmt },
