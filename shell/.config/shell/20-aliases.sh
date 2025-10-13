@@ -37,18 +37,17 @@ alias speedtest='iperf3 -c speedtest.hetzner.de'
 alias headers='curl -I'
 
 # Archive helpers
-alias extract='bsdtar -xvf'          # Extract any tar.* or zip file
-alias zipit='zip -r'                 # Quick zip archive
+alias extract='bsdtar -xvf' # Extract any tar.* or zip file
+alias zipit='zip -r'        # Quick zip archive
 
 # JSON pretty print
 alias json='jq .'
 
 # tmux helpers
-alias tns='tmux new -s'               # new session
-alias tls='tmux ls'                   # list sessions
-alias ta='tmux attach -t'              # attach to session
+alias tns='tmux new -s'   # new session
+alias tls='tmux ls'       # list sessions
+alias ta='tmux attach -t' # attach to session
 
-scanlocal() {
-    local subnet="${1:-192.168.1.0/24}"
-    sudo nmap -sn "$subnet"
-}
+#Poweroff
+alias stn='shutdown now'
+alias srn='shutdown -r now'

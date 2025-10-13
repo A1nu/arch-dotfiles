@@ -14,7 +14,9 @@ bspc monitor DP-0 -d 3 6 9 # Right monitor
 
 bspc rule -a mpv state=floating sticky=on rectangle=480x272+2070+57
 bspc rule -a FM state=floating center=on follow=on
-
+bspc rule -a 'mpv:eve_overlay' \
+  state=floating sticky=on layer=above border=off \
+  rectangle=369x609+385+45
 bspc config -m DP-4 top_padding 35
 bspc config -m DP-2 top_padding 35
 bspc config -m DP-0 top_padding 35
