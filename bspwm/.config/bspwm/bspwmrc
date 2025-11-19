@@ -11,6 +11,7 @@ bspc config pointer_follows_focus true
 bspc monitor DP-4 -d 2 5 8 # Left monitor
 bspc monitor DP-2 -d 1 4 7 # Center (primary) monitor
 bspc monitor DP-0 -d 3 6 9 # Right monitor
+bspc monitor HDMI-0 -d 10
 
 bspc rule -a mpv state=floating sticky=on rectangle=480x272+2070+57
 bspc rule -a FM state=floating center=on follow=on

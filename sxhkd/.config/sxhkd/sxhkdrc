@@ -93,6 +93,8 @@ XF86AudioPrev
   playerctl previous
 XF86Tools
   toggle-sink.sh
+XF86Tools + shift
+  toggle-hdmi --move-active
 
 # Screenshot to clipboard (X11)
 super + ctrl + 4
