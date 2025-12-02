@@ -3,36 +3,37 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local conform = require("conform")
+		local util = require("conform.util")
 
 		conform.setup({
 			formatters_by_ft = {
-				-- JS / TS / Web → Biome
 				javascript = { "biome" },
 				typescript = { "biome" },
 				javascriptreact = { "biome" }, -- .jsx
 				typescriptreact = { "biome" }, -- .tsx
-				svelte = { "biome" },
-				html = { "biome" },
-				css = { "biome" },
-				scss = { "biome" },
-				less = { "biome" },
-				graphql = { "biome" },
-				liquid = { "biome" },
-
-				-- Data/markup
 				json = { "biome" },
-				jsonc = { "biome" }, -- полезно для tsconfig.json
-				yaml = { "biome" },
-				markdown = { "biome" },
+				jsonc = { "biome" }, -- tsconfig
+				css = { "biome" },
+				graphql = { "biome" },
 
-				-- Lua / Python (оставляем как было)
+				svelte = { "prettierd" },
+				html = { "prettierd" },
+				scss = { "prettierd" },
+				less = { "prettierd" },
+				liquid = { "prettierd" },
+
+				-- Markdown / YAML
+				markdown = { "prettierd", "markdownlint" },
+				yaml = { "prettierd" },
+
+				-- Lua / Python
 				lua = { "stylua" },
 				python = { "isort", "black" },
 
-				-- Go (оставляем как было)
+				-- Go
 				go = { "goimports", "gofumpt", "golines" },
 
-				-- Java (оставляем как было)
+				-- Java
 				java = { "google-java-format", lsp_format = "fallback" },
 
 				-- Shell

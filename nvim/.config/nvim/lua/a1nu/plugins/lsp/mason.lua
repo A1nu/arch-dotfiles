@@ -57,6 +57,13 @@ return {
 				"editorconfig-checker",
 				"gopls",
 				"golangci-lint",
+				"mdformat",
+				"yamlfmt",
+				"prettierd",
+				"goimports",
+				"gofumpt",
+				"golines",
+				"google-java-format",
 			},
 		})
 	end,
