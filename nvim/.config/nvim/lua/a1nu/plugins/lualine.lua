@@ -69,12 +69,12 @@ return {
 				},
 				lualine_z = {
 					{ "location" },
-					{
-						icon = "🕐",
-						function()
-							return os.date("%H:%M") -- ⏰ format
-						end,
-					},
+					-- {
+					-- 	icon = "🕐",
+					-- 	function()
+					-- 		return os.date("%H:%M") -- ⏰ format
+					-- 	end,
+					-- },
 				},
 			},
 		})
