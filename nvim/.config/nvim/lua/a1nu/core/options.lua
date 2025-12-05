@@ -2,6 +2,7 @@ vim.cmd("let g:netrw_liststyle = 3")
 
 local opt = vim.opt -- for conciseness
 
+opt.mouse = "a"
 -- persistend undo
 vim.opt.undofile = true
 vim.fn.mkdir(vim.fn.expand("~/.nvim/undodir"), "p")
