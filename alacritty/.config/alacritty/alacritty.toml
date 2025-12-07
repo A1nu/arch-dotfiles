@@ -19,7 +19,7 @@ history = 10000
 # pf era 
 # background = "#00001A"
 
-background = "#010105"
+# background = "#010105"
 # background = "#555555"
 
 [debug]
@@ -71,10 +71,11 @@ args = ["--login"]
 program = "/usr/bin/bash"
 
 [general]
-# [general]
-#import = ["~/.config/alacritty/themes/themes/kimbie_dark.toml"]
+import = ["~/.config/alacritty/themes/themes/kitty.toml"]
 
 [window]
 opacity = 0.9
+blur = true 
 
 [terminal]
+
