@@ -31,7 +31,7 @@ return {
 				python = { "isort", "black" },
 
 				-- Go
-				go = { "goimports", "gofumpt", "golines" },
+				go = { "goimports", "gofumpt" },
 
 				-- Java
 				java = { "google-java-format", lsp_format = "fallback" },
