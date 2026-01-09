@@ -1,14 +1,14 @@
 
 # --- Launcher keys ---
 super + Return
-  kitty
+  terminal
 super + e
-  kitty --class FM -e yazi
+  terminal --class FM -e yazi
 super + space
   rofi -show drun
  # Task manager (htop)
 ctrl + shift + Escape
-    kitty --class FM -e htop
+    terminal --class FM -e htop
 
 # Reload sxhkd config
 super + Escape
