@@ -44,7 +44,7 @@ alias zipit='zip -r'        # Quick zip archive
 alias json='jq .'
 
 # tmux helpers
-alias tns='tmux new -s'   # new session
+alias tn='tmux new -s'    # new session
 alias tls='tmux ls'       # list sessions
 alias ta='tmux attach -t' # attach to session
 
