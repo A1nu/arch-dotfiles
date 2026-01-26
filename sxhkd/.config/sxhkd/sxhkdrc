@@ -1,14 +1,13 @@
-
 # --- Launcher keys ---
 super + Return
   terminal
 super + e
-  terminal --class FM -e yazi
+    terminal --class FM yazi
 super + space
   rofi -show drun
  # Task manager (htop)
 ctrl + shift + Escape
-    terminal --class FM -e htop
+    terminal --class FM htop
 
 # Reload sxhkd config
 super + Escape
@@ -27,6 +26,8 @@ super + v
   bspc node -t ~floating
 super + f
   bspc node -t ~fullscreen
+super + r
+    bspc node -f .floating.local
 
 # Pseudo-tile (similar to Hyprland pseudotile)
 super + p

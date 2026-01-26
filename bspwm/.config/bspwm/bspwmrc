@@ -21,7 +21,3 @@ bspc rule -a 'mpv:eve_overlay' \
 bspc config -m DP-4 top_padding 35
 bspc config -m DP-2 top_padding 35
 bspc config -m DP-0 top_padding 35
-
-if ! pgrep -x feh >/dev/null; then
-  feh --bg-fill "$HOME/Pictures/wallpapers/anime-girl-3840x2160-14871.jpeg"
-fi
