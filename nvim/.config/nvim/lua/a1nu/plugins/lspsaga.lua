@@ -10,5 +10,8 @@ return {
 			show_file = true,
 			color_mode = true,
 		},
+		lightbulb = {
+			virtual_text = false,
+		},
 	},
 }
