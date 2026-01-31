@@ -2,12 +2,12 @@
 super + Return
   terminal
 super + e
-    terminal --class FM yazi
+    env UTIL_TERM=1 terminal --class FM -e yazi
 super + space
   rofi -show drun
  # Task manager (htop)
 ctrl + shift + Escape
-    terminal --class FM htop
+    env UTIL_TERM=1 terminal --class HTOP -e htop
 
 # Reload sxhkd config
 super + Escape

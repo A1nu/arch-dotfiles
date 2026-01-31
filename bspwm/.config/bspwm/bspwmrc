@@ -15,6 +15,7 @@ bspc monitor HDMI-0 -d 10
 
 bspc rule -a mpv state=floating sticky=on rectangle=480x272+2070+57
 bspc rule -a FM state=floating center=on follow=on
+bspc rule -a HTOP state=floating center=on follow=on
 bspc rule -a 'mpv:eve_overlay' \
   state=floating sticky=on layer=above border=off \
   rectangle=369x609+385+45
