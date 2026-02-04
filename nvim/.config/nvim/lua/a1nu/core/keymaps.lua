@@ -46,3 +46,6 @@ keymap.set("n", "<A-k>", "10kzz", { desc = "Scroll up 10 lines and recenter" })
 -- Search improvements
 keymap.set("n", "n", "nzz", { desc = "Move to next value with screen centered" })
 keymap.set("n", "N", "Nzz", { desc = "Move to previous value with screen centered" })
+
+vim.keymap.set("n", "j", "gj")
+vim.keymap.set("n", "k", "gk")
