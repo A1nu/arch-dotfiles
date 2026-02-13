@@ -52,7 +52,7 @@ super + ctrl + {k, j}
 super + ctrl + shift + {h, l}
   bspc node -z left  {+100 0, -100 0}
 super + ctrl + shift + {k, j}
-  bspc node -z bottom {0 -100, 0 +1-0}
+  bspc node -z bottom {0 -100, 0 +100}
 # Move floating window by arrows (small/big steps)
 super + {Up,Down,Left,Right}
   bspc node -v {0 -10,0 +10,-10 0,+10 0}
@@ -72,7 +72,7 @@ super + shift + {1-9,0}
 super + s
   bspc node -g sticky
 
-super + m
+super + shift + m
     bspc desktop -l ~
 
 # Volume / media (PipeWire via wpctl like in Hyprland)
@@ -96,6 +96,10 @@ XF86Tools
   toggle-sink.sh
 XF86Tools + shift
   toggle-hdmi --move-active
+XF86MonBrightnessUp
+  brightnessctl set +5%
+XF86MonBrightnessDown
+  brightnessctl set 5%-
 
 # Screenshot to clipboard (X11)
 super + ctrl + 4
