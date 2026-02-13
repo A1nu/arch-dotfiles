@@ -12,7 +12,7 @@ if [[ -z "$SSH_CONNECTION" ]] && [[ $(tty) != /dev/tty* ]] && [[ -z "$TMUX" ]] &
       awk -F: '$2 == 0 && $1 != "scratch" {print $1}' |
       while read -r name; do
         if tmux list-panes -t "$name" -F "#{pane_current_command}" |
-          grep -vqE '^(bash|zsh|fish)$'; then
+          \grep -vqE '^(bash|zsh|fish)$'; then
           continue
         fi
         echo "$name"
