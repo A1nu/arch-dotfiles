@@ -1,0 +1,16 @@
+[Unit]
+Description=Polkit Authentication Agent (polkit-gnome)
+After=xsession.target
+PartOf=xsession.target
+
+[Service]
+Type=simple
+ExecStart=/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+Restart=on-failure
+RestartSec=2
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+
+[Install]
+WantedBy=xsession.target
+

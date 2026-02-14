@@ -1,0 +1,16 @@
+[Unit]
+Description=Screen locker on suspend (xss-lock + i3lock)
+After=xsession.target
+PartOf=xsession.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/xss-lock -- /usr/bin/i3lock -c 000000
+Restart=on-failure
+RestartSec=2
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+
+[Install]
+WantedBy=xsession.target
+

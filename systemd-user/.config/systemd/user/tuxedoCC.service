@@ -1,0 +1,13 @@
+[Unit]
+Description=TUXEDO Control Center (autostart)
+After=xsession.target
+PartOf=xsession.target
+
+[Service]
+Type=simple
+ExecStart=/opt/tuxedo-control-center/tuxedo-control-center --tray
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=xsession.target

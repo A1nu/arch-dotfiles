@@ -1,0 +1,15 @@
+[Unit]
+Description=Restore wallpaper via feh (~/.fehbg)
+After=xsession.target
+PartOf=xsession.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.fehbg
+RemainAfterExit=yes
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+
+[Install]
+WantedBy=xsession.target
+

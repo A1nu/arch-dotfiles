@@ -1,0 +1,16 @@
+[Unit]
+Description=NetworkManager Applet
+After=xsession.target
+PartOf=xsession.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/nm-applet
+Restart=on-failure
+RestartSec=2
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+
+[Install]
+WantedBy=xsession.target
+

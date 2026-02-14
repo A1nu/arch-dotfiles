@@ -1,0 +1,16 @@
+[Unit]
+Description=Fcitx5 input method
+After=xsession.target
+PartOf=xsession.target
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+ExecStart=/usr/bin/fcitx5
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=xsession.target
+

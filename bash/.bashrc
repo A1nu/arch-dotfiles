@@ -1,7 +1,6 @@
 #
 # ~/.bashrc
 #
-
 for f in "$HOME/.config/shell/"*.sh; do
   [ -f "$f" ] || continue
   . "$f" || echo "Warning: failed to source $f" >&2

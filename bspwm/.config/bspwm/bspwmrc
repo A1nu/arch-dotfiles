@@ -21,29 +21,5 @@ bspc rule -a 'mpv:eve_overlay' \
   state=floating sticky=on layer=above border=off \
   rectangle=369x609+385+45
 
-# Hotkeys
-pgrep -x sxhkd >/dev/null || sxhkd &
-
-# Network tray applet
-pgrep -x nm-applet >/dev/null || nm-applet &
-
-# Polkit agent (GUI privilege prompts)
-pgrep -x polkit-gnome-authentication-agent-1 >/dev/null || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
-
 # Cursor (avoid "X default X cursor" weirdness)
 xsetroot -cursor_name left_ptr &
-
-# Compositor / bar (optional: if you use them everywhere)
-pgrep -x picom >/dev/null || picom &
-~/.config/polybar/launch.sh >/dev/null 2>&1 &
-
-# Notifications
-pgrep -x dunst >/dev/null || dunst &
-
-# Language switch
-pgrep -x fcitx5 >/dev/null || fcitx5 -d &
-
-# lock on suspend
-pgrep -x xss-lock >/dev/null || xss-lock -- i3lock -c 000000 &
-
-~/.fehbg &

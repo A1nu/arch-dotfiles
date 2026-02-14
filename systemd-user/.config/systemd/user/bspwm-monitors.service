@@ -1,0 +1,13 @@
+[Unit]
+Description=Configure monitors for bspwm
+After=xsession.target
+PartOf=xsession.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/bspwm/monitors.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=xsession.target
+

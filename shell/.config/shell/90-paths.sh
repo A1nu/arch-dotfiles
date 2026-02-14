@@ -1,1 +1,1 @@
-PATH=$PATH:~/.local/bin:/usr/local/go/bin
+PATH=$PATH:$HOME/.local/bin:/usr/local/go/bin

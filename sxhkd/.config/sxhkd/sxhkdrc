@@ -10,7 +10,7 @@ ctrl + shift + Escape
     env UTIL_TERM=1 terminal --class HTOP -e htop
 
 # Lockscreen
-super + shift + l
+ctrl + shift + q
   i3lock -c 000000
 
 # Reload sxhkd config
