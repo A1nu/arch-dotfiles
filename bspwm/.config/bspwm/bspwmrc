@@ -8,17 +8,31 @@ bspc config gapless_monocle true
 bspc config focus_follows_pointer true
 bspc config pointer_follows_focus true
 
-bspc monitor DP-4 -d 2 5 8 # Left monitor
-bspc monitor DP-2 -d 1 4 7 # Center (primary) monitor
-bspc monitor DP-0 -d 3 6 9 # Right monitor
-bspc monitor HDMI-0 -d 10
+# bspc monitor DP-4 -d 2 5 8 # Left monitor
+# bspc monitor DP-2 -d 1 4 7 # Center (primary) monitor
+# bspc monitor DP-0 -d 3 6 9 # Right monitor
+# bspc monitor HDMI-0 -d 10
+~/.config/bspwm/monitors.sh &
 
-bspc rule -a mpv state=floating sticky=on rectangle=480x272+2070+57
+bspc rule -a mpv state=floating sticky=on
 bspc rule -a FM state=floating center=on follow=on
 bspc rule -a HTOP state=floating center=on follow=on
 bspc rule -a 'mpv:eve_overlay' \
   state=floating sticky=on layer=above border=off \
   rectangle=369x609+385+45
-bspc config -m DP-4 top_padding 35
-bspc config -m DP-2 top_padding 35
-bspc config -m DP-0 top_padding 35
+
+# Hotkeys
+pgrep -x sxhkd >/dev/null || sxhkd &
+
+# Network tray applet
+pgrep -x nm-applet >/dev/null || nm-applet &
+
+# Polkit agent (GUI privilege prompts)
+pgrep -x polkit-gnome-authentication-agent-1 >/dev/null || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+# Cursor (avoid "X default X cursor" weirdness)
+xsetroot -cursor_name left_ptr &
+
+# Compositor / bar (optional: if you use them everywhere)
+pgrep -x picom >/dev/null || picom &
+~/.config/polybar/launch.sh >/dev/null 2>&1 &
