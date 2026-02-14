@@ -45,3 +45,5 @@ pgrep -x fcitx5 >/dev/null || fcitx5 -d &
 
 # lock on suspend
 pgrep -x xss-lock >/dev/null || xss-lock -- i3lock -c 000000 &
+
+~/.fehbg &
