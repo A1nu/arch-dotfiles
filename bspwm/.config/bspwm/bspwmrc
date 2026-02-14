@@ -36,3 +36,12 @@ xsetroot -cursor_name left_ptr &
 # Compositor / bar (optional: if you use them everywhere)
 pgrep -x picom >/dev/null || picom &
 ~/.config/polybar/launch.sh >/dev/null 2>&1 &
+
+# Notifications
+pgrep -x dunst >/dev/null || dunst &
+
+# Language switch
+pgrep -x fcitx5 >/dev/null || fcitx5 -d &
+
+# lock on suspend
+pgrep -x xss-lock >/dev/null || xss-lock -- i3lock -c 000000 &

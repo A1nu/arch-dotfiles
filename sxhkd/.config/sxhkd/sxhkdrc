@@ -101,7 +101,7 @@ XF86Tools
 XF86Tools + shift
   toggle-hdmi --move-active
 XF86MonBrightnessUp
-  brightnessctl set +5%
+  brightnessctl set 5%+
 XF86MonBrightnessDown
   brightnessctl set 5%-
 
