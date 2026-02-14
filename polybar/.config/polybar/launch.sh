@@ -1,7 +1,17 @@
-#!/usr/bin/env bash
-killall -q polybar
-while pgrep -x polybar >/dev/null; do sleep 0.3; done
+#!/bin/sh
+set -eu
 
-MONITOR=DP-2 polybar --reload -l info main &
-MONITOR=DP-4 polybar --reload -l info secondary &
-MONITOR=DP-0 polybar --reload -l info secondary &
+pkill -x polybar >/dev/null 2>&1 || true
+while pgrep -x polybar >/dev/null 2>&1; do sleep 0.2; done
+
+# Pick primary monitor (fallback to first connected)
+PRIMARY="$(xrandr --query | awk '/ connected primary/{print $1; exit}')"
+[ -n "${PRIMARY:-}" ] || PRIMARY="$(xrandr --query | awk '/ connected/{print $1; exit}')"
+
+for m in $(xrandr --query | awk '/ connected/{print $1}'); do
+  if [ "$m" = "$PRIMARY" ]; then
+    MONITOR="$m" polybar --reload main &
+  else
+    MONITOR="$m" polybar --reload secondary &
+  fi
+done
