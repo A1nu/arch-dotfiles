@@ -10,10 +10,18 @@ if not vim.loop.fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
-require("lazy").setup({ { import = "a1nu.plugins" }, { import = "a1nu.plugins.lsp" } }, {
+require("lazy").setup({
+	spec = {
+		{ import = "a1nu.plugins" },
+		{ import = "a1nu.plugins.lsp" },
+	},
 	checker = {
 		enabled = true,
 		notify = false,
 	},
-	performance = { rtp = { disabled_plugins = { "gzip", "tarPlugin", "tohtml", "zipPlugin", "netrwPlugin" } } },
+	performance = {
+		rtp = {
+			disabled_plugins = { "gzip", "tarPlugin", "tohtml", "zipPlugin", "netrwPlugin" },
+		},
+	},
 })
