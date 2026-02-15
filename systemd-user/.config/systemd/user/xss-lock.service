@@ -5,11 +5,11 @@ PartOf=xsession.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/xss-lock -- /usr/bin/i3lock -c 000000
-Restart=on-failure
-RestartSec=2
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=%h/.Xauthority
+ExecStart=/usr/bin/xss-lock -- /usr/bin/i3lock -n -c 000000
+Restart=always
+RestartSec=2
 
 [Install]
 WantedBy=xsession.target
