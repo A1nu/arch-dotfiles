@@ -15,3 +15,8 @@ for m in $(xrandr --query | awk '/ connected/{print $1}'); do
     MONITOR="$m" polybar --reload secondary &
   fi
 done
+
+HOST="$(/usr/bin/hostname)"
+if [ "$HOST" = "devnull" ]; then
+  MONITOR="$PRIMARY" polybar --reload bottom &
+fi
