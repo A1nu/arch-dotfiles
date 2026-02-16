@@ -11,7 +11,7 @@ ctrl + shift + Escape
 
 # Lockscreen
 ctrl + shift + q
-  i3lock -c 000000
+  xset s activate
 
 # Reload sxhkd config
 super + Escape

@@ -27,7 +27,7 @@ EDP="$(echo "$MONITORS" | grep -E '^eDP' | head -n1 || true)"
 # If we have an internal display, use it as baseline
 if [ -n "${EDP:-}" ]; then
   # Undocked default: 1..10 on internal display
-  bspc monitor "$EDP" -d 1 2 3 4 5 6 7 8 9 10
+  display-apply
 fi
 
 # If external monitors exist, you can map desktops across them.
