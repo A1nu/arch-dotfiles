@@ -1,1 +1,11 @@
 nvim/.config/nvim/lazy-lock.json
+# systemd generated symlink dirs (enable creates these)
+**/*.wants/
+**/*.requires/
+
+# common user targets created by packages/systemd
+**/default.target.wants/
+**/sockets.target.wants/
+**/paths.target.wants/
+**/timers.target.wants/
+**/basic.target.wants/

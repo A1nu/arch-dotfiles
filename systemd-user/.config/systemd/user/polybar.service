@@ -10,6 +10,9 @@ RemainAfterExit=yes
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=%h/.Xauthority
 Environment=PATH=%h/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin
+TimeoutStopSec=5
+KillMode=mixed
+SendSIGKILL=yes
 
 [Install]
 WantedBy=xsession.target
