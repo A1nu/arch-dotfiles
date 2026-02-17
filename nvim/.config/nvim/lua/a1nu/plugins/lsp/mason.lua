@@ -38,6 +38,7 @@ return {
 				"bashls", -- Bash/sh
 				"clangd", -- C/C++
 				"vimls", -- Vimscript
+				"jsonls",
 			},
 		})
 
