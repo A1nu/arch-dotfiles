@@ -1,0 +1,12 @@
+[Unit]
+Description=Steam (minimized)
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/steam -silent
+Restart=no
+
+[Install]
+WantedBy=default.target
