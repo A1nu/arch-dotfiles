@@ -13,6 +13,7 @@ Environment=PATH=%h/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin
 TimeoutStopSec=5
 KillMode=mixed
 SendSIGKILL=yes
+ExecCondition=/usr/bin/test "$XDG_SESSION_TYPE" = "x11"
 
 [Install]
 WantedBy=xsession.target

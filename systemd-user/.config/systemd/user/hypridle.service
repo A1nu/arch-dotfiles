@@ -1,0 +1,14 @@
+[Unit]
+Description=Hypridle
+After=graphical-session.target
+Wants=graphical-session.target
+
+[Service]
+Type=simple
+ExecCondition=/usr/bin/test "$XDG_SESSION_TYPE" = "wayland"
+ExecStart=/usr/bin/hypridle
+Restart=on-failure
+RestartSec=1
+
+[Install]
+WantedBy=graphical-session.target

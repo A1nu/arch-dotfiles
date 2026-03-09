@@ -1,12 +1,13 @@
 [Unit]
 Description=Steam (minimized)
-After=graphical-session.target
-Wants=graphical-session.target
+After=xsession.target
+PartOf=xsession.target
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/steam -silent
 Restart=no
+ExecCondition=/usr/bin/test "$XDG_SESSION_TYPE" = "x11"
 
 [Install]
-WantedBy=default.target
+WantedBy=xsession.target

@@ -51,3 +51,11 @@ alias ta='tmux attach -t' # attach to session
 #Poweroff
 alias stn='shutdown now'
 alias srn='shutdown -r now'
+
+# Safer delete helpers
+alias del='trash-put'
+alias trash='trash-list'
+alias restore='trash-restore'
+alias emptytrash='trash-empty'
+
+alias rm='rm -I --preserve-root'

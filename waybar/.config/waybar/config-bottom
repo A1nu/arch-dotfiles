@@ -1,0 +1,48 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "height": 24,
+  "spacing": 10,
+
+  "modules-left": [
+    "custom/wg",
+    "custom/pi",
+    "custom/desk"
+  ],
+  "modules-center": [
+    "custom/nowplaying"
+  ],
+  "modules-right": [
+    "custom/bt"
+  ],
+
+  "custom/wg": {
+    "interval": 2,
+    "exec": "bash -lc \"$HOME/.config/polybar/scripts/wg-status.sh wg-home\"",
+    "return-type": "text"
+  },
+
+  "custom/pi": {
+    "interval": 5,
+    "exec": "bash -lc \"$HOME/.config/polybar/scripts/port-status.sh PI 10.10.0.1 22 2\"",
+    "return-type": "text"
+  },
+
+  "custom/desk": {
+    "interval": 5,
+    "exec": "bash -lc \"$HOME/.config/polybar/scripts/port-status.sh DESK 10.10.0.1 2222 2\"",
+    "return-type": "text"
+  },
+
+  "custom/nowplaying": {
+    "interval": 1,
+    "exec": "bash -lc \"$HOME/.config/polybar/scripts/now-playing.sh\"",
+    "return-type": "text"
+  },
+
+  "custom/bt": {
+    "interval": 3,
+    "exec": "bash -lc \"$HOME/.config/polybar/scripts/bt-status.sh\"",
+    "return-type": "text"
+  }
+}

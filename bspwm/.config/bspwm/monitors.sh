@@ -13,9 +13,9 @@ has() { echo "$MONS" | grep -qx "$1"; }
 # --- Desktop profile (your PC) ---
 # DP-4 left, DP-2 center, DP-0 right, HDMI-0 extra
 if has "DP-4" && has "DP-2" && has "DP-0"; then
-  bspc monitor DP-4 -d 2 5 8
-  bspc monitor DP-2 -d 1 4 7
-  bspc monitor DP-0 -d 3 6 9
+  bspc monitor DP-2 -d 2 5 8
+  bspc monitor DP-0 -d 1 4 7
+  bspc monitor DP-4 -d 3 6 9
   if has "HDMI-0"; then
     bspc monitor HDMI-0 -d 10
   fi

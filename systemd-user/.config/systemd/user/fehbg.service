@@ -9,6 +9,7 @@ ExecStart=%h/.fehbg
 RemainAfterExit=yes
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=%h/.Xauthority
+ExecCondition=/usr/bin/test "$XDG_SESSION_TYPE" = "x11"
 
 [Install]
 WantedBy=xsession.target

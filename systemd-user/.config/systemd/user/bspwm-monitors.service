@@ -7,6 +7,7 @@ PartOf=xsession.target
 Type=oneshot
 ExecStart=%h/.config/bspwm/monitors.sh
 RemainAfterExit=yes
+ExecCondition=/usr/bin/test "$XDG_SESSION_TYPE" = "x11"
 
 [Install]
 WantedBy=xsession.target
