@@ -1,0 +1,3 @@
+# Trigger refresh rate switch when AC adapter is plugged/unplugged
+ACTION=="change", SUBSYSTEM=="power_supply", KERNEL=="AC0", ATTR{type}=="Mains", \
+    RUN+="/usr/local/bin/hypr-power.sh"

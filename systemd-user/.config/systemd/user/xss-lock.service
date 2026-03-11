@@ -11,6 +11,7 @@ RestartSec=1
 Environment=XSECURELOCK_SAVER=/usr/lib/xsecurelock/saver_blank
 Environment=XSECURELOCK_DIMMER=/usr/lib/xsecurelock/dimmer
 Environment=XSECURELOCK_BLANK_TIMEOUT=5
+ExecCondition=/usr/bin/test "$XDG_SESSION_TYPE" = "x11"
 
 [Install]
 WantedBy=xsession.target
