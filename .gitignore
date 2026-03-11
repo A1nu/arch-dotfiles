@@ -1,4 +1,7 @@
 nvim/.config/nvim/lazy-lock.json
+hypr/.config/hypr/host.conf
+hypr/.config/hypr/hypridle-host.conf
+waybar/.config/waybar/config
 # systemd generated symlink dirs (enable creates these)
 **/*.wants/
 **/*.requires/
