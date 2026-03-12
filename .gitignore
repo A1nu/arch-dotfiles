@@ -13,3 +13,5 @@ waybar/.config/waybar/config
 **/paths.target.wants/
 **/timers.target.wants/
 **/basic.target.wants/
+/waybar/.config/waybar/config
+/hypr/.config/hypr/hypridle-host.conf
