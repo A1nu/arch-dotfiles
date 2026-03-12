@@ -18,6 +18,7 @@
       "cpu",
       "battery",
       "network",
+      "hyprland/language",
       "tray",
       "clock"
     ],
@@ -83,6 +84,10 @@
       "format-ethernet": "{ifname} {ipaddr}",
       "format-disconnected": "net off",
       "tooltip": true
+    },
+
+    "hyprland/language": {
+      "format": "{short}"
     },
 
     "tray": {

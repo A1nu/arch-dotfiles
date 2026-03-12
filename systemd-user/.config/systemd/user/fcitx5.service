@@ -10,6 +10,7 @@ Environment=XAUTHORITY=%h/.Xauthority
 ExecStart=/usr/bin/fcitx5
 Restart=on-failure
 RestartSec=2
+ExecCondition=/usr/bin/test "$XDG_SESSION_TYPE" = "x11"
 
 [Install]
 WantedBy=xsession.target
