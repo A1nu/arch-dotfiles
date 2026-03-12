@@ -12,7 +12,6 @@
   "modules-right": [
     "disk#root",
     "disk#storage",
-    "custom/storage",
     "pulseaudio",
     "memory",
     "cpu",
