@@ -15,3 +15,4 @@ waybar/.config/waybar/config
 **/basic.target.wants/
 /waybar/.config/waybar/config
 /hypr/.config/hypr/hypridle-host.conf
+/hypr/.config/hypr/host.conf
