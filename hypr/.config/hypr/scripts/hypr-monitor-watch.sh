@@ -17,20 +17,30 @@ move_to_laptop() {
     done
 }
 
+# On startup: if an external monitor is already connected, move workspaces now
+external=$(hyprctl monitors -j | jq -r '.[] | select(.name != "eDP-1") | .name' | head -1)
+if [ -n "$external" ]; then
+    move_to_monitor "$external"
+fi
+
 SOCK="/run/user/$(id -u)/hypr/${HYPRLAND_INSTANCE_SIGNATURE}/.socket2.sock"
 
-socat - "UNIX-CONNECT:${SOCK}" | while IFS= read -r line; do
-    event="${line%%>>*}"
-    data="${line#*>>}"
+# Reconnect loop: socat can die if Hyprland briefly drops the event socket
+while true; do
+    socat -u "UNIX-CONNECT:${SOCK}" - 2>/dev/null | while IFS= read -r line; do
+        event="${line%%>>*}"
+        data="${line#*>>}"
+        data="${data%$'\r'}"  # strip trailing carriage return
 
-    case "$event" in
-        monitoradded)
-            # data is the monitor name e.g. "DP-1"
-            sleep 1  # give Hyprland a moment to fully register the monitor
-            move_to_monitor "$data"
-            ;;
-        monitorremoved)
-            move_to_laptop
-            ;;
-    esac
+        case "$event" in
+            monitoradded)
+                sleep 2  # give Hyprland time to finish auto-placement
+                move_to_monitor "$data"
+                ;;
+            monitorremoved)
+                move_to_laptop
+                ;;
+        esac
+    done
+    sleep 1
 done

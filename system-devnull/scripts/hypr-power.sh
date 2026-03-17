@@ -16,16 +16,19 @@ AC=$(cat /sys/class/power_supply/AC0/online 2>/dev/null)
 
 USERNAME=$(id -un "${USER_ID}")
 
+# Preserve current eDP-1 position so external monitor layout is not disrupted
+EDP_POS=$(su -c "HYPRLAND_INSTANCE_SIGNATURE=${INSTANCE} hyprctl monitors -j" -s /bin/bash "${USERNAME}" \
+    | jq -r '.[] | select(.name == "eDP-1") | "\(.x)x\(.y)"')
+EDP_POS="${EDP_POS:-0x0}"
+
 if [ "$AC" = "1" ]; then
     REFRESH="120"
     brightnessctl set 25%+
-    su -c "HYPRLAND_INSTANCE_SIGNATURE=${INSTANCE} hyprctl keyword monitor eDP-1,2880x1800@${REFRESH},0x0,1.25" \
-        -s /bin/bash \
-        "${USERNAME}"
 else
     REFRESH="60"
     brightnessctl set 25%-
-    su -c "HYPRLAND_INSTANCE_SIGNATURE=${INSTANCE} hyprctl keyword monitor eDP-1,2880x1800@${REFRESH},0x0,1.25" \
-        -s /bin/bash \
-        "${USERNAME}"
 fi
+
+su -c "HYPRLAND_INSTANCE_SIGNATURE=${INSTANCE} hyprctl keyword monitor eDP-1,2880x1800@${REFRESH},${EDP_POS},1.25" \
+    -s /bin/bash \
+    "${USERNAME}"
