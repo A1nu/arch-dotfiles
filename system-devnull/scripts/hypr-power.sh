@@ -19,13 +19,13 @@ USERNAME=$(id -un "${USER_ID}")
 if [ "$AC" = "1" ]; then
     REFRESH="120"
     brightnessctl set 25%+
-    su -c "HYPRLAND_INSTANCE_SIGNATURE=${INSTANCE} hyprctl keyword monitor eDP-1,2880x1800@${REFRESH},0x0,2" \
+    su -c "HYPRLAND_INSTANCE_SIGNATURE=${INSTANCE} hyprctl keyword monitor eDP-1,2880x1800@${REFRESH},0x0,1.25" \
         -s /bin/bash \
         "${USERNAME}"
 else
     REFRESH="60"
     brightnessctl set 25%-
-    su -c "HYPRLAND_INSTANCE_SIGNATURE=${INSTANCE} hyprctl keyword monitor eDP-1,2880x1800@${REFRESH},0x0,2" \
+    su -c "HYPRLAND_INSTANCE_SIGNATURE=${INSTANCE} hyprctl keyword monitor eDP-1,2880x1800@${REFRESH},0x0,1.25" \
         -s /bin/bash \
         "${USERNAME}"
 fi

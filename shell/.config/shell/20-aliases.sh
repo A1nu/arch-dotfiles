@@ -48,6 +48,9 @@ alias tn='tmux new -s'    # new session
 alias tls='tmux ls'       # list sessions
 alias ta='tmux attach -t' # attach to session
 
+# PiP video (floating, top-right, 25% screen width)
+alias mpv-pip='mpv --ontop --no-border'
+
 #Poweroff
 alias stn='shutdown now'
 alias srn='shutdown -r now'
