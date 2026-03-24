@@ -27,7 +27,7 @@
       "format": "{name}",
       "on-click": "activate",
       "sort-by-number": true,
-      "persistent-workspaces": true
+      "all-outputs": false
     },
 
     "hyprland/window": {
