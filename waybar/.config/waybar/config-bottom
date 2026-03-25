@@ -18,7 +18,7 @@
 
   "custom/wg": {
     "interval": 2,
-    "exec": "bash -lc \"$HOME/.config/polybar/scripts/wg-status.sh wg-home\"",
+    "exec": "bash -lc \"$HOME/.config/polybar/scripts/wg-status.sh wg0\"",
     "return-type": "text"
   },
 
@@ -30,7 +30,7 @@
 
   "custom/desk": {
     "interval": 5,
-    "exec": "bash -lc \"$HOME/.config/polybar/scripts/port-status.sh DESK 10.10.0.1 2222 2\"",
+    "exec": "bash -lc \"$HOME/.config/polybar/scripts/port-status.sh DESK 10.10.0.4 22 2\"",
     "return-type": "text"
   },
 
