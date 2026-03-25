@@ -18,8 +18,10 @@ get_dp() {
     get_monitors | grep "^DP-" | head -1
 }
 
-move_ws() {
+bind_ws() {
     local ws="$1" monitor="$2"
+    # Bind workspace to monitor (persistent rule) and move it there
+    hyprctl keyword workspace "$ws, monitor:$monitor"
     hyprctl dispatch moveworkspacetomonitor "$ws" "$monitor"
 }
 
@@ -31,41 +33,41 @@ apply_layout() {
 
     if [ -n "$dp" ] && [ -n "$hdmi" ]; then
         # 3 monitors: DP 1,4,7 / eDP-1 2,5,8 / HDMI-A-1 3,6,9
-        move_ws 1 "$dp"
-        move_ws 2 eDP-1
-        move_ws 3 "$hdmi"
-        move_ws 4 "$dp"
-        move_ws 5 eDP-1
-        move_ws 6 "$hdmi"
-        move_ws 7 "$dp"
-        move_ws 8 eDP-1
-        move_ws 9 "$hdmi"
+        bind_ws 1 "$dp"
+        bind_ws 2 eDP-1
+        bind_ws 3 "$hdmi"
+        bind_ws 4 "$dp"
+        bind_ws 5 eDP-1
+        bind_ws 6 "$hdmi"
+        bind_ws 7 "$dp"
+        bind_ws 8 eDP-1
+        bind_ws 9 "$hdmi"
     elif [ -n "$dp" ]; then
         # 2 monitors (DP): DP 1,3,5,7,9 / eDP-1 2,4,6,8
-        move_ws 1 "$dp"
-        move_ws 2 eDP-1
-        move_ws 3 "$dp"
-        move_ws 4 eDP-1
-        move_ws 5 "$dp"
-        move_ws 6 eDP-1
-        move_ws 7 "$dp"
-        move_ws 8 eDP-1
-        move_ws 9 "$dp"
+        bind_ws 1 "$dp"
+        bind_ws 2 eDP-1
+        bind_ws 3 "$dp"
+        bind_ws 4 eDP-1
+        bind_ws 5 "$dp"
+        bind_ws 6 eDP-1
+        bind_ws 7 "$dp"
+        bind_ws 8 eDP-1
+        bind_ws 9 "$dp"
     elif [ -n "$hdmi" ]; then
         # 2 monitors (HDMI): HDMI 1,3,5,7,9 / eDP-1 2,4,6,8
-        move_ws 1 "$hdmi"
-        move_ws 2 eDP-1
-        move_ws 3 "$hdmi"
-        move_ws 4 eDP-1
-        move_ws 5 "$hdmi"
-        move_ws 6 eDP-1
-        move_ws 7 "$hdmi"
-        move_ws 8 eDP-1
-        move_ws 9 "$hdmi"
+        bind_ws 1 "$hdmi"
+        bind_ws 2 eDP-1
+        bind_ws 3 "$hdmi"
+        bind_ws 4 eDP-1
+        bind_ws 5 "$hdmi"
+        bind_ws 6 eDP-1
+        bind_ws 7 "$hdmi"
+        bind_ws 8 eDP-1
+        bind_ws 9 "$hdmi"
     else
         # Laptop only: all on eDP-1
         for ws in 1 2 3 4 5 6 7 8 9; do
-            move_ws "$ws" eDP-1
+            bind_ws "$ws" eDP-1
         done
     fi
 }

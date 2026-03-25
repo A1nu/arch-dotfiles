@@ -15,10 +15,8 @@ alias grep='rg'
 # Navigation
 alias ..='cd ..'
 alias ...='cd ../..'
-alias -- -='cd -'
 
 # Quick edit/reload
-alias bashrc='${EDITOR:-nvim} ~/.bashrc'
 alias reload='source ~/.bashrc'
 alias c='clear'
 

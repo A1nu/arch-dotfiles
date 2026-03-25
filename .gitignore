@@ -16,3 +16,5 @@ waybar/.config/waybar/config
 /waybar/.config/waybar/config
 /hypr/.config/hypr/hypridle-host.conf
 /hypr/.config/hypr/host.conf
+/hypr/.config/hypr/monitors.conf
+/hypr/.config/hypr/workspaces.conf
