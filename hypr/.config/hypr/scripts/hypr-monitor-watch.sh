@@ -1,75 +1,48 @@
 #!/bin/bash
 # hypr-monitor-watch.sh — distribute workspaces across monitors on hotplug
-# Supports 3 configurations:
-#   1. eDP-1 only:              1-9 on eDP-1
-#   2. eDP-1 + DP:              DP gets 1,3,5,7,9 / eDP-1 gets 2,4,6,8
-#   3. eDP-1 + DP + HDMI-A-1:   DP gets 1,4,7 / eDP-1 gets 2,5,8 / HDMI-A-1 gets 3,6,9
+# Supports configurations:
+#   1. eDP-1 only:                    1-9 on eDP-1
+#   2. eDP-1 + 1 external:           ext 1,3,5,7,9 / eDP-1 2,4,6,8
+#   3. eDP-1 + 2 externals:          ext1 1,4,7 / eDP-1 2,5,8 / ext2 3,6,9
+# External monitors: any combination of DP-* and HDMI-A-*
 
 get_monitors() {
     hyprctl monitors -j | jq -r '.[].name'
 }
 
-has_monitor() {
-    get_monitors | grep -q "^$1"
-}
-
-# Find the DP monitor name (DP-1, DP-2, DP-3, etc.)
-get_dp() {
-    get_monitors | grep "^DP-" | head -1
-}
-
-bind_ws() {
-    local ws="$1" monitor="$2"
-    # Bind workspace to monitor (persistent rule) and move it there
-    hyprctl keyword workspace "$ws, monitor:$monitor"
-    hyprctl dispatch moveworkspacetomonitor "$ws" "$monitor"
+# Collect external monitors (everything except eDP-1), sorted for consistency
+get_externals() {
+    get_monitors | grep -v "^eDP-" | sort
 }
 
 apply_layout() {
-    local dp hdmi
-    dp=$(get_dp)
-    hdmi=""
-    has_monitor "HDMI-A-1" && hdmi="HDMI-A-1"
+    local -a ext ws_monitor
+    mapfile -t ext < <(get_externals)
+    local n=${#ext[@]}
 
-    if [ -n "$dp" ] && [ -n "$hdmi" ]; then
-        # 3 monitors: DP 1,4,7 / eDP-1 2,5,8 / HDMI-A-1 3,6,9
-        bind_ws 1 "$dp"
-        bind_ws 2 eDP-1
-        bind_ws 3 "$hdmi"
-        bind_ws 4 "$dp"
-        bind_ws 5 eDP-1
-        bind_ws 6 "$hdmi"
-        bind_ws 7 "$dp"
-        bind_ws 8 eDP-1
-        bind_ws 9 "$hdmi"
-    elif [ -n "$dp" ]; then
-        # 2 monitors (DP): DP 1,3,5,7,9 / eDP-1 2,4,6,8
-        bind_ws 1 "$dp"
-        bind_ws 2 eDP-1
-        bind_ws 3 "$dp"
-        bind_ws 4 eDP-1
-        bind_ws 5 "$dp"
-        bind_ws 6 eDP-1
-        bind_ws 7 "$dp"
-        bind_ws 8 eDP-1
-        bind_ws 9 "$dp"
-    elif [ -n "$hdmi" ]; then
-        # 2 monitors (HDMI): HDMI 1,3,5,7,9 / eDP-1 2,4,6,8
-        bind_ws 1 "$hdmi"
-        bind_ws 2 eDP-1
-        bind_ws 3 "$hdmi"
-        bind_ws 4 eDP-1
-        bind_ws 5 "$hdmi"
-        bind_ws 6 eDP-1
-        bind_ws 7 "$hdmi"
-        bind_ws 8 eDP-1
-        bind_ws 9 "$hdmi"
+    # Build workspace-to-monitor mapping (index 1-9)
+    if [ "$n" -ge 2 ]; then
+        # 3 monitors: ext[0] 1,4,7 / eDP-1 2,5,8 / ext[1] 3,6,9
+        ws_monitor=(_ "${ext[0]}" eDP-1 "${ext[1]}" "${ext[0]}" eDP-1 "${ext[1]}" "${ext[0]}" eDP-1 "${ext[1]}")
+    elif [ "$n" -eq 1 ]; then
+        # 2 monitors: ext 1,3,5,7,9 / eDP-1 2,4,6,8
+        ws_monitor=(_ "${ext[0]}" eDP-1 "${ext[0]}" eDP-1 "${ext[0]}" eDP-1 "${ext[0]}" eDP-1 "${ext[0]}")
     else
-        # Laptop only: all on eDP-1
-        for ws in 1 2 3 4 5 6 7 8 9; do
-            bind_ws "$ws" eDP-1
-        done
+        # Laptop only
+        ws_monitor=(_ eDP-1 eDP-1 eDP-1 eDP-1 eDP-1 eDP-1 eDP-1 eDP-1 eDP-1)
     fi
+
+    # Phase 1: set all monitor binding rules via batch
+    local batch=""
+    for ws in 1 2 3 4 5 6 7 8 9; do
+        batch+="keyword workspace $ws, monitor:${ws_monitor[$ws]};"
+    done
+    hyprctl --batch "$batch"
+
+    # Phase 2: create and move each workspace
+    for ws in 1 2 3 4 5 6 7 8 9; do
+        hyprctl dispatch moveworkspacetomonitor "$ws" "${ws_monitor[$ws]}" 2>/dev/null
+    done
 }
 
 # Apply layout on startup
