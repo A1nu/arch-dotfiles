@@ -7,10 +7,10 @@ return {
 
 		conform.setup({
 			formatters_by_ft = {
-				javascript = { "biome" },
-				typescript = { "biome" },
-				javascriptreact = { "biome" }, -- .jsx
-				typescriptreact = { "biome" }, -- .tsx
+				javascript = { "biome-organize-imports", "biome" },
+				typescript = { "biome-organize-imports", "biome" },
+				javascriptreact = { "biome-organize-imports", "biome" }, -- .jsx
+				typescriptreact = { "biome-organize-imports", "biome" }, -- .tsx
 				json = { "biome" },
 				jsonc = { "biome" }, -- tsconfig
 				css = { "biome" },
@@ -28,7 +28,7 @@ return {
 
 				-- Lua / Python
 				lua = { "stylua" },
-				python = { "isort", "black" },
+				python = { "ruff_format", "ruff_organize_imports" },
 
 				-- Go
 				go = { "goimports", "gofumpt" },
@@ -45,14 +45,14 @@ return {
 			},
 
 			format_on_save = {
-				lsp_fallback = true,
+				lsp_format = "fallback",
 				async = false,
 				timeout_ms = 1000,
 			},
 		})
 
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
-			conform.format({ lsp_fallback = true, async = false, timeout_ms = 1000 })
+			conform.format({ lsp_format = "fallback", async = false, timeout_ms = 1000 })
 		end, { desc = "Format file or range (in visual mode)" })
 	end,
 }

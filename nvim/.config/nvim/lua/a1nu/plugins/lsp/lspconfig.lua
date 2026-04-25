@@ -4,7 +4,7 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {} },
+		{ "folke/lazydev.nvim", ft = "lua", opts = {} },
 	},
 	config = function()
 		local util = require("lspconfig.util") -- root helpers
@@ -52,8 +52,8 @@ return {
 				keymap.set("n", "]d", function()
 					vim.diagnostic.jump({ count = 1 })
 				end, opts)
-				opts.desc = "Show documentation"
-				keymap.set("n", "K", vim.lsp.buf.hover, opts)
+				opts.desc = "Signature help"
+				keymap.set("i", "<C-s>", vim.lsp.buf.signature_help, opts)
 				opts.desc = "Restart LSP"
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
 			end,
@@ -157,6 +157,8 @@ return {
 					},
 				},
 			},
+			clangd = { capabilities = capabilities, on_attach = on_attach_disable_fmt },
+			jsonls = { capabilities = capabilities, on_attach = on_attach_disable_fmt },
 			vimls = { capabilities = capabilities },
 			dockerls = { capabilities = capabilities },
 			ruff = {

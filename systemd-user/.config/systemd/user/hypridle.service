@@ -7,7 +7,7 @@ Wants=graphical-session.target
 Type=simple
 ExecCondition=/usr/bin/test "$XDG_SESSION_TYPE" = "wayland"
 ExecStart=/usr/bin/hypridle
-Restart=on-failure
+Restart=always
 RestartSec=1
 
 [Install]

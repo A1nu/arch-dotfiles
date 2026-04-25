@@ -46,8 +46,7 @@ return {
 			ensure_installed = {
 				"biome",
 				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
+				"ruff", -- python formatter + linter
 				"shfmt",
 				"clang-format",
 				"htmlhint",

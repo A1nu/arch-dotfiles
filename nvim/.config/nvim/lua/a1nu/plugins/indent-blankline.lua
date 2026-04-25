@@ -1,8 +1,2 @@
-return {
-  "lukas-reineke/indent-blankline.nvim",
-  event = { "BufReadPre", "BufNewFile" },
-  main = "ibl",
-  opts = {
-    indent = { char = "┊" },
-  },
-}
+-- Disabled: using snacks.nvim indent instead
+return {}

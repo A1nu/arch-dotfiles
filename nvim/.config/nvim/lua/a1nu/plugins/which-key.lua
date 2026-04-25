@@ -6,8 +6,18 @@ return {
     vim.o.timeoutlen = 500
   end,
   opts = {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
+    spec = {
+      { "<leader>s", group = "Split" },
+      { "<leader>t", group = "Tab" },
+      { "<leader>f", group = "Find" },
+      { "<leader>x", group = "Trouble" },
+      { "<leader>d", group = "Debug" },
+      { "<leader>a", group = "AI (Claude)" },
+      { "<leader>w", group = "Session" },
+      { "<leader>c", group = "Code/Yazi" },
+      { "<leader>l", group = "Lazygit/LSP" },
+      { "<leader>r", group = "Rename/Restart" },
+      { "<leader>m", group = "Format" },
+    },
   },
 }

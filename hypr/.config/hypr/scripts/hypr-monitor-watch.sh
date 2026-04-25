@@ -32,17 +32,23 @@ apply_layout() {
         ws_monitor=(_ eDP-1 eDP-1 eDP-1 eDP-1 eDP-1 eDP-1 eDP-1 eDP-1 eDP-1)
     fi
 
-    # Phase 1: set all monitor binding rules via batch
+    # Clear stale workspace rules (keyword workspace appends, never replaces)
+    hyprctl reload
+    sleep 1
+
+    # Set monitor binding rules for future workspace creation
     local batch=""
     for ws in 1 2 3 4 5 6 7 8 9; do
         batch+="keyword workspace $ws, monitor:${ws_monitor[$ws]};"
     done
     hyprctl --batch "$batch"
 
-    # Phase 2: create and move each workspace
+    # Move existing workspaces to their target monitors
+    batch=""
     for ws in 1 2 3 4 5 6 7 8 9; do
-        hyprctl dispatch moveworkspacetomonitor "$ws" "${ws_monitor[$ws]}" 2>/dev/null
+        batch+="dispatch moveworkspacetomonitor $ws ${ws_monitor[$ws]};"
     done
+    hyprctl --batch "$batch"
 }
 
 # Apply layout on startup
@@ -54,12 +60,11 @@ SOCK="/run/user/$(id -u)/hypr/${HYPRLAND_INSTANCE_SIGNATURE}/.socket2.sock"
 while true; do
     socat -u "UNIX-CONNECT:${SOCK}" - 2>/dev/null | while IFS= read -r line; do
         event="${line%%>>*}"
-        data="${line#*>>}"
-        data="${data%$'\r'}"
 
         case "$event" in
             monitoradded|monitorremoved)
-                sleep 2
+                # Debounce: drain all events for 3s after the last monitor change
+                while IFS= read -r -t 3 line; do :; done
                 apply_layout
                 ;;
         esac

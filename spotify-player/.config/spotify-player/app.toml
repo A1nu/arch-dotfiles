@@ -1,4 +1,4 @@
-theme = "tokyo-night"
+theme = "sonokai"
 client_id = "d420a117a32841c2b3474932e49fb54b"
 client_port = 8080
 login_redirect_uri = "http://127.0.0.1:8989/login"
@@ -13,7 +13,7 @@ playback_metadata_fields = [
     "device",
 ]
 notify_timeout_in_secs = 0
-notify_transient = false
+notify_transient = true
 tracks_playback_limit = 50
 app_refresh_duration_in_ms = 32
 playback_refresh_duration_in_ms = 0

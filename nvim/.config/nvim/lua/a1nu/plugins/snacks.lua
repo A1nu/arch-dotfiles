@@ -5,7 +5,7 @@ return {
 	---@type snacks.Config
 	opts = {
 		indent = { enabled = true },
-		lazygit = { enabled = true },
+		lazygit = { enabled = false },
 		notifier = { enabled = true },
 	},
 }

@@ -44,8 +44,8 @@ return {
 			-- EditorConfig
 			editorconfig = { "editorconfig-checker" },
 
-			-- Python
-			python = { "pylint" },
+			-- Python (ruff replaces pylint — faster, covers same rules)
+			python = { "ruff" },
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
