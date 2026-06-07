@@ -1,0 +1,12 @@
+# Sets the initial clamshell-inhibitor state at boot (udev handles later changes).
+# Deployed to /etc/systemd/system/clamshell-guard.service
+[Unit]
+Description=Evaluate clamshell inhibitor state
+After=systemd-logind.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/clamshell-guard.sh
+
+[Install]
+WantedBy=graphical.target

@@ -25,14 +25,55 @@ echo "--> udev rule"
 install -Dm644 "${SCRIPT_DIR}/udev/99-hypr-power.rules" /etc/udev/rules.d/99-hypr-power.rules
 udevadm control --reload-rules
 
+# --- clamshell guard (clamshell only on AC + external display) ---
+echo "--> clamshell-guard.sh + services"
+install -Dm755 "${SCRIPT_DIR}/scripts/clamshell-guard.sh"        /usr/local/bin/clamshell-guard.sh
+install -Dm644 "${SCRIPT_DIR}/systemd/clamshell-inhibit.service" /etc/systemd/system/clamshell-inhibit.service
+install -Dm644 "${SCRIPT_DIR}/systemd/clamshell-guard.service"   /etc/systemd/system/clamshell-guard.service
+systemctl daemon-reload
+systemctl enable --now clamshell-guard.service
+
+# --- systemd sleep/lid drop-ins (suspend-then-hibernate) ---
+echo "--> systemd logind + sleep drop-ins"
+install -Dm644 "${SCRIPT_DIR}/systemd/logind-lid.conf"      /etc/systemd/logind.conf.d/10-lid-hibernate.conf
+install -Dm644 "${SCRIPT_DIR}/systemd/sleep-hibernate.conf" /etc/systemd/sleep.conf.d/10-hibernate-delay.conf
+
+# --- Kernel cmdline (UKI): NVMe sleep-drain fix + hibernate resume device ---
+# Samsung 990 draws ~4W in s2idle via broken "Simple Suspend"; nvme.noacpi=1 -> ~1.4W (TUXEDO Gen9 FAQ).
+# resume= points at the encrypted swap LV (already unlocked by the encrypt+lvm2 hooks at boot).
+echo "--> kernel cmdline (/etc/kernel/cmdline)"
+CMDLINE=/etc/kernel/cmdline
+SWAP_DEV=/dev/vg0/lv_swap
+cp -n "$CMDLINE" "${CMDLINE}.bak"   # one-time backup
+grep -q 'nvme.noacpi=1' "$CMDLINE" || sed -i 's/$/ nvme.noacpi=1/' "$CMDLINE"
+if [ -e "$SWAP_DEV" ]; then
+  SWAP_UUID="$(blkid -o value -s UUID "$SWAP_DEV")"
+  grep -q 'resume=' "$CMDLINE" || sed -i "s#\$# resume=UUID=${SWAP_UUID}#" "$CMDLINE"
+else
+  echo "    WARNING: $SWAP_DEV not found — skipped resume= (hibernate will not work)"
+fi
+
+# --- mkinitcpio: add 'resume' hook after lvm2 (needed for hibernate) ---
+echo "--> mkinitcpio HOOKS (resume)"
+cp -n /etc/mkinitcpio.conf /etc/mkinitcpio.conf.bak   # one-time backup
+grep -qE '^HOOKS=.*\bresume\b' /etc/mkinitcpio.conf || \
+  sed -i '/^HOOKS=/ s/\blvm2\b/lvm2 resume/' /etc/mkinitcpio.conf
+
+# --- Rebuild UKI (bakes in the new cmdline + initramfs hooks) ---
+echo "--> rebuilding initramfs/UKI (mkinitcpio -p linux)"
+mkinitcpio -p linux
+
 echo ""
-echo "==> Done. Remaining manual step:"
-echo ""
-echo "    Kernel sleep mode (systemd-boot):"
-echo "    Edit /boot/loader/entries/arch.conf and append to the options line:"
-echo "      mem_sleep_default=s2idle"
-echo ""
-echo "    Then: sudo bootctl update (if needed)"
+echo "==> Done. Reboot required for the cmdline + initramfs changes to take effect."
 echo ""
 echo "    Verify after reboot:"
-echo "      cat /sys/power/mem_sleep   # should show [s2idle]"
+echo "      cat /proc/cmdline        # contains nvme.noacpi=1 and resume=UUID=..."
+echo "      cat /sys/power/mem_sleep # [s2idle]"
+echo "      cat /sys/power/resume    # non-zero (swap device maj:min)"
+echo ""
+echo "    TEST HIBERNATE before relying on it:"
+echo "      sudo systemctl hibernate   # powers fully off; power back on -> session restored"
+echo "      (if it boots fresh instead of restoring your session, hibernate is NOT working)"
+echo ""
+echo "    Then test the lid: unplug AC, close lid, wait >10 min -> machine should be"
+echo "    powered off (hibernated), and reopening should restore your session."

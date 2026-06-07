@@ -1,0 +1,8 @@
+# Holds a handle-lid-switch block inhibitor so a closed lid stays awake (clamshell).
+# Started/stopped by clamshell-guard.sh — NOT enabled directly (no [Install]).
+# Deployed to /etc/systemd/system/clamshell-inhibit.service
+[Unit]
+Description=Clamshell lid-switch inhibitor (AC + external display)
+
+[Service]
+ExecStart=/usr/bin/systemd-inhibit --what=handle-lid-switch --who=clamshell-guard --why=clamshell-mode-on-AC --mode=block sleep infinity

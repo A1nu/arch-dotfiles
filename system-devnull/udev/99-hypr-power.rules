@@ -1,3 +1,8 @@
 # Trigger refresh rate switch when AC adapter is plugged/unplugged
 ACTION=="change", SUBSYSTEM=="power_supply", KERNEL=="AC0", ATTR{type}=="Mains", \
     RUN+="/usr/local/bin/hypr-power.sh"
+
+# Re-evaluate clamshell inhibitor on AC change and on monitor hotplug
+ACTION=="change", SUBSYSTEM=="power_supply", KERNEL=="AC0", ATTR{type}=="Mains", \
+    RUN+="/usr/local/bin/clamshell-guard.sh"
+ACTION=="change", SUBSYSTEM=="drm", RUN+="/usr/local/bin/clamshell-guard.sh"
