@@ -34,6 +34,9 @@ alias myip='curl -s ifconfig.me && echo'
 alias speedtest='iperf3 -c speedtest.hetzner.de'
 alias headers='curl -I'
 
+# Wake desktop via the Pi (works over the WG VPN — Pi is on the desktop's LAN segment)
+alias wake-desktop="ssh pi 'wakeonlan e8:9c:25:7d:f2:db'"
+
 # Archive helpers
 alias extract='bsdtar -xvf' # Extract any tar.* or zip file
 alias zipit='zip -r'        # Quick zip archive
