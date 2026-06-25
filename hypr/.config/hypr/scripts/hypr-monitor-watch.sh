@@ -49,6 +49,10 @@ apply_layout() {
         batch+="dispatch moveworkspacetomonitor $ws ${ws_monitor[$ws]};"
     done
     hyprctl --batch "$batch"
+
+    # Re-apply eDP-1 refresh for the current AC state — the `hyprctl reload` above
+    # resets it to monitors.conf (120Hz), so restore 60Hz when on battery.
+    "$HOME/.config/hypr/scripts/hypr-refresh.sh" 2>/dev/null
 }
 
 # Apply layout on startup

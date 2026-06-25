@@ -1,0 +1,20 @@
+# Disable USB/Thunderbolt as S4 (hibernate) wake sources.
+# Prevents spurious wake when unplugging dock after hibernating.
+[Unit]
+Description=Disable USB/Thunderbolt hibernate wake sources
+Before=hibernate.target hybrid-sleep.target suspend-then-hibernate.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '\
+  for dev in 0000:00:14.0 0000:00:0d.0 0000:00:0d.2 0000:00:07.0; do \
+    echo disabled > /sys/devices/pci0000:00/$dev/power/wakeup 2>/dev/null || true; \
+  done'
+ExecStop=/bin/sh -c '\
+  for dev in 0000:00:14.0 0000:00:0d.0 0000:00:0d.2 0000:00:07.0; do \
+    echo enabled > /sys/devices/pci0000:00/$dev/power/wakeup 2>/dev/null || true; \
+  done'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=hibernate.target hybrid-sleep.target suspend-then-hibernate.target

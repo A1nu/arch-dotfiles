@@ -16,27 +16,33 @@ echo "--> TLP config"
 install -Dm644 "${SCRIPT_DIR}/tlp/10-laptop.conf" /etc/tlp.d/10-laptop.conf
 tlp start
 
-# --- hypr-power script ---
-echo "--> hypr-power.sh"
-install -Dm755 "${SCRIPT_DIR}/scripts/hypr-power.sh" /usr/local/bin/hypr-power.sh
+# --- (removed) hypr-power.sh: AC/battery refresh switching moved to the user dotfile
+#     ~/.config/hypr/scripts/hypr-refresh.sh (called by udev + hypr-monitor-watch.sh) ---
+rm -f /usr/local/bin/hypr-power.sh
 
 # --- udev rule ---
 echo "--> udev rule"
 install -Dm644 "${SCRIPT_DIR}/udev/99-hypr-power.rules" /etc/udev/rules.d/99-hypr-power.rules
 udevadm control --reload-rules
 
-# --- clamshell guard (clamshell only on AC + external display) ---
-echo "--> clamshell-guard.sh + services"
-install -Dm755 "${SCRIPT_DIR}/scripts/clamshell-guard.sh"        /usr/local/bin/clamshell-guard.sh
-install -Dm644 "${SCRIPT_DIR}/systemd/clamshell-inhibit.service" /etc/systemd/system/clamshell-inhibit.service
-install -Dm644 "${SCRIPT_DIR}/systemd/clamshell-guard.service"   /etc/systemd/system/clamshell-guard.service
+# --- Remove deprecated clamshell-guard bits (no longer used) ---
+echo "--> removing deprecated clamshell-guard (if present)"
+systemctl disable --now clamshell-guard.service clamshell-inhibit.service 2>/dev/null || true
+rm -f /etc/systemd/system/clamshell-guard.service \
+      /etc/systemd/system/clamshell-inhibit.service \
+      /usr/local/bin/clamshell-guard.sh
 systemctl daemon-reload
-systemctl enable --now clamshell-guard.service
 
 # --- systemd sleep/lid drop-ins (suspend-then-hibernate) ---
 echo "--> systemd logind + sleep drop-ins"
 install -Dm644 "${SCRIPT_DIR}/systemd/logind-lid.conf"      /etc/systemd/logind.conf.d/10-lid-hibernate.conf
 install -Dm644 "${SCRIPT_DIR}/systemd/sleep-hibernate.conf" /etc/systemd/sleep.conf.d/10-hibernate-delay.conf
+
+# --- Disable USB/Thunderbolt as hibernate wake sources ---
+echo "--> disable USB/Thunderbolt hibernate wake"
+install -Dm644 "${SCRIPT_DIR}/systemd/disable-usb-hibernate-wake.service" /etc/systemd/system/disable-usb-hibernate-wake.service
+systemctl daemon-reload
+systemctl enable disable-usb-hibernate-wake.service
 
 # --- Kernel cmdline (UKI): NVMe sleep-drain fix + hibernate resume device ---
 # Samsung 990 draws ~4W in s2idle via broken "Simple Suspend"; nvme.noacpi=1 -> ~1.4W (TUXEDO Gen9 FAQ).
